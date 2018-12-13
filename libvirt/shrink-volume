@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Context: /var/lib/libvirt
+
+# Given a list of volume names (without .qcow2 extension) rewrites them to
+# .qcow2.new files, shrinking and compressing the data.
+#
+# Reject the file if not owned by root (such as libvirt-qemu, which means it is used).
+# Overwriting the original volume is left to a human, because it might have
+# been altered/used since starting the conversion.
+#
+# NB: after shrinking, new data will not be compressed.
+
+for volume in "$@"; do
+    ORIG=$volume.qcow2
+    DEST=$volume.qcow2.new
+    [ "$(stat -c %U "$ORIG")" != "root" ] && echo "Skipping $ORIG: volume in use." && continue
+    echo "Shrinking $ORIG -> $DEST"
+    qemu-img convert -p -O qcow2 -c "$ORIG" "$DEST"
+    chmod 600 "$DEST"
+done
+
