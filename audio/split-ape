@@ -1,0 +1,4 @@
+#!/bin/sh
+
+shnsplit -o "flac flac -s -8 -o %f -" -f CDImage.cue CDImage.ape
+

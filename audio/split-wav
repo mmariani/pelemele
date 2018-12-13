@@ -1,0 +1,11 @@
+#!/bin/sh
+
+cuebreakpoints disc.cue | shnsplit disc.wav
+
+#cuebreakpoints file.cue | shnsplit -o flac file.flac
+#cuetag file.cue "split-*".flac
+
+# also
+##### shnsplit: error: m:ss.ff format can only be used with CD-quality files
+# https://unix.stackexchange.com/a/63976
+
