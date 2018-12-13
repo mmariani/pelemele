@@ -1,0 +1,4 @@
+#!/bin/sh
+
+youtube-dl --rate-limit 200K --extract-audio --audio-format mp3 "$@"
+

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if ( readelf --relocs "$1" | grep -E '(GOT|PLT|JU?MP_SLOT)' ); then
+    echo yes
+else
+    echo no
+fi
+
