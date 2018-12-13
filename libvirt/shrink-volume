@@ -6,10 +6,17 @@
 # .qcow2.new files, shrinking and compressing the data.
 #
 # Reject the file if not owned by root (such as libvirt-qemu, which means it is used).
+#
 # Overwriting the original volume is left to a human, because it might have
 # been altered/used since starting the conversion.
 #
-# NB: after shrinking, new data will not be compressed.
+# Having said that, there is a system of locks in place, so attempting to start a vm
+# while a volume is converted should print:
+#
+# > Failed to get "write" lock
+# > Is another process using the image?
+#
+# NB: after shrinking, new data appended to a volume will not be compressed.
 
 for volume in "$@"; do
     ORIG=$volume.qcow2
